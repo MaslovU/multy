@@ -8,12 +8,17 @@ import java.util.concurrent.Callable;
 import java.util.logging.SimpleFormatter;
 
 public class MyCallable implements Callable<String> {
-    Date date = new Date();
     DateFormat simpleFormatter = new SimpleDateFormat("yyyy dd MM: hh mm ss");
+    private static int count = 0;
 
     @Override
     public String call() throws Exception {
         Date date = new Date();
+        count++;
         return "Success! " + simpleFormatter.format(date);
+    }
+
+    public static int getCount() {
+        return count;
     }
 }
