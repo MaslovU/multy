@@ -1,41 +1,51 @@
 package homework_synchronized_1;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
 public class Seller {
-    List<Lada> ladas = new ArrayList<>();
+    Lock locker;
+    Condition condition;
     private static int amount = 0;
 
-    public synchronized void makeLada() {
+    public Seller(Lock locker, Condition condition) {
+        this.locker = locker;
+        this.condition = condition;
+    }
+
+    public void makeLada() {
+//        locker.lock();
         try {
-            while (amount > 10) {
-                wait();
-            }
-            int cycleForMakeNewLada = 500;
+            int cycleForMakeNewLada = 3000;
             Thread.sleep(cycleForMakeNewLada);
-            System.out.println("\nLada give birth to new car!");
-            ladas.add(new Lada());
+            System.out.println("Lada give birth to new car!");
             amount++;
-            notifyAll();
+            System.out.println("Amount is: " + amount);
+            if (locker.tryLock()) {
+                condition.signalAll();
+            }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        finally {
+            locker.unlock();
         }
     }
 
-    public synchronized void sellLada() {
+    public void sellLada() {
+        locker.lock();
         try {
-            while (ladas.size() == 0) {
-                System.out.println(Thread.currentThread().getName() + " are lucky! We have no Lada now!");
-                int cycle = 1000;
-                Thread.sleep(cycle);
-                wait();
+            while (amount == 0) {
+                System.out.println(Thread.currentThread().getName() + " are lucky! We have no Lada now!\n");
+                condition.await();
             }
+            amount--;
+            System.out.println(Thread.currentThread().getName() + " buy new Lada!\n");
+            condition.signalAll();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } finally {
+            locker.unlock();
         }
-        System.out.println(Thread.currentThread().getName() + " buy new Lada!\n");
-        ladas.remove(0);
-        notify();
     }
 }
