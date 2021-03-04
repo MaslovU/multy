@@ -2,6 +2,8 @@ package homework_synchronized_1_1;
 
 public class Lada implements Runnable {
     Seller seller = new Seller();
+    final int MAX_AMOUNT_LADA = 10;
+    final int cycleForMakeNewLada = 1000;
 
     public Lada(Seller seller) {
         this.seller = seller;
@@ -12,10 +14,8 @@ public class Lada implements Runnable {
 
     @Override
     public void run() {
-        int MAX_AMOUNT_LADA = 10;
         for (int i = 0; i < MAX_AMOUNT_LADA; i++) {
             try {
-                int cycleForMakeNewLada = 1000;
                 Thread.sleep(cycleForMakeNewLada);
             } catch (InterruptedException e) {
                 e.printStackTrace();
