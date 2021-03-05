@@ -7,7 +7,7 @@ public class Seller {
     Lock locker;
     Condition condition;
     private static int amount = 0;
-    final int cycleForMakeNewLada = 3000;
+    final int CYCLE_FOR_MAKE_NEW_LADA = 3000;
 
     public Seller(Lock locker, Condition condition) {
         this.locker = locker;
@@ -16,7 +16,7 @@ public class Seller {
 
     public void makeLada() {
         try {
-            Thread.sleep(cycleForMakeNewLada);
+            Thread.sleep(CYCLE_FOR_MAKE_NEW_LADA);
             System.out.println("\nLada give birth to new car!");
             amount++;
             System.out.println("Amount is: " + amount);
