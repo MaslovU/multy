@@ -20,9 +20,13 @@ public class Specialist extends Thread {
                 System.out.println("Calls queue isEmpty, please wait 0.5 sec");
             }
         }
-        while (Call.counterWorking < COUNTER_WORKING) {
+        while (true) {
             try {
-                call.getCallForHandling();
+                if (!(call.getCallForHandling() < COUNTER_WORKING)) break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
                 Thread.sleep(HANDLING_CALL_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
