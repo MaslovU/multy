@@ -9,20 +9,17 @@ public class SynchronizedMapExample {
     protected volatile static int sizeMySArray = 3000;
 
     public void readHashMap() throws InterruptedException {
-        synchronized (sHashMap) {
             for (Integer key : sHashMap.keySet()) {
                 System.out.println("Key is: " + key + " value is: " + sHashMap.get(key));
             }
-        }
     }
 
     public void createHashMap() {
-        synchronized (sHashMap) {
             for (int i = 0; i < sizeMySArray; i++) {
                 map.put(i, "element" + i);
             }
         }
-    }
+
 
     public void changeHashMap() {
         synchronized (sHashMap) {
