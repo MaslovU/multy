@@ -2,7 +2,7 @@ package homework_client_server_5_1;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.*;
 
 public class Client {
     public static void main(String[] args) throws IOException {
@@ -21,8 +21,15 @@ public class Client {
                     value = scanner.nextLine();
                     out.println(value);
                     if (value.equals("no")) break;
+                    String res = reader.readLine();
 
-                    System.out.println("Server return resuli is: " + reader.readLine());
+                    System.out.println("Server return resuli is: " + res);
+                    String replace1 = res.replace("[", ",");
+                    String replace2 = replace1.replace("]", ",");
+                    List<String> list = new ArrayList<String>(Arrays.asList(replace2.split(",")));
+                    long longRes = Long.parseLong(list.get(list.size() - 1).trim());
+
+                    System.out.println("Last value is: " + longRes);
                 }
             }
         } catch (IOException e) {
