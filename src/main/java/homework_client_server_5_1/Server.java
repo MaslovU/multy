@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.List;
 
 public class Server {
+    // был выбран Blocking способ взаимодействия, так как нам важно получить точный результат вычисления
     public static void main(String[] args) throws IOException {
         Evaluation evaluation = new Evaluation();
         ServerSocket server = new ServerSocket(8583);
@@ -20,6 +21,7 @@ public class Server {
                 while ((valueString = reader.readLine()) != null) {
                     if(valueString.equals("no")) break;
                     int value = Integer.parseInt(valueString);
+
                     List<Long> res = evaluation.result(value);
                     out.println(res);
                 }
