@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws IOException {
+        // в этом примере выбрано неблокирующее взаимодействие, потому что мы вводим поток строк,
+        // нам важен общий итоговый результат
         InetSocketAddress socketAddress = new InetSocketAddress("127.0.0.1", 8358);
         final SocketChannel channel = SocketChannel.open();
 
