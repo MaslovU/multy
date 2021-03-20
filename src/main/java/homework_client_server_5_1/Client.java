@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Client {
     public static void main(String[] args) throws IOException {
+        HandlerString handlerString = new HandlerString();
         Socket client = new Socket("127.0.0.1", 8583);
 
         try {
@@ -24,11 +25,8 @@ public class Client {
                     String res = reader.readLine();
 
                     System.out.println("Server return resuli is: " + res);
-                    String replace1 = res.replace("[", ",");
-                    String replace2 = replace1.replace("]", ",");
-                    List<String> list = new ArrayList<String>(Arrays.asList(replace2.split(",")));
-                    long longRes = Long.parseLong(list.get(list.size() - 1).trim());
 
+                    long longRes = handlerString.returnLastValue(res);
                     System.out.println("Last value is: " + longRes);
                 }
             }
