@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Main {
@@ -31,6 +32,10 @@ public class Main {
             return list;
         };
 
-        handlerPhrase.handleString(handlerPhraseI.actionWithString(finalAborigen));
+        Set<String> myDict =handlerPhrase.handleString(handlerPhraseI.actionWithString(finalAborigen));
+        for (String el: myDict
+             ) {
+            System.out.println(el);
+        }
     }
 }
